@@ -1,0 +1,105 @@
+OpenSSL s_client Command Reference
+==================================
+
+BASIC CONNECTION
+----------------
+Connect to an HTTPS website and view certificate:
+  openssl s_client -connect www.example.com:443
+
+Connect with full certificate chain:
+  openssl s_client -connect www.example.com:443 -showcerts
+
+EXTRACTING CERTIFICATE INFORMATION
+-----------------------------------
+
+1. Save server certificate to file:
+   openssl s_client -connect www.example.com:443 -showcerts < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > cert.pem
+
+2. View certificate details (subject, issuer, dates):
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' | \
+   openssl x509 -noout -text
+
+3. View certificate subject:
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' | \
+   openssl x509 -noout -subject
+
+4. View certificate issuer:
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' | \
+   openssl x509 -noout -issuer
+
+5. View certificate validity dates:
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' | \
+   openssl x509 -noout -dates
+
+6. View certificate fingerprint:
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' | \
+   openssl x509 -noout -fingerprint -sha256
+
+7. View cipher suite information:
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   grep -i "cipher\|protocol"
+
+8. View all certificate extensions:
+   openssl s_client -connect www.example.com:443 < /dev/null 2>&1 | \
+   sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' | \
+   openssl x509 -noout -text | grep -A 10 "X509v3 extensions"
+
+COMPLETE INSPECTION (All in one)
+---------------------------------
+Save full output to file:
+  openssl s_client -connect www.example.com:443 -showcerts < /dev/null > full_output.txt 2>&1
+
+EXAMPLES FOR COMMON WEBSITES
+----------------------------
+Google:
+  openssl s_client -connect www.google.com:443 -showcerts
+
+GitHub:
+  openssl s_client -connect github.com:443 -showcerts
+
+Let's Encrypt test site:
+  openssl s_client -connect helloworld.letsencrypt.org:443 -showcerts
+
+WINDOWS POWERSHELL ALTERNATIVE
+------------------------------
+If OpenSSL is not available, use the provided PowerShell script:
+  powershell -ExecutionPolicy Bypass -File openssl_tls_inspection.ps1 -Website www.google.com
+
+Or use .NET certificate inspection:
+  $tcp = New-Object System.Net.Sockets.TcpClient("www.google.com", 443)
+  $ssl = New-Object System.Net.Security.SslStream($tcp.GetStream())
+  $ssl.AuthenticateAsClient("www.google.com")
+  $cert = $ssl.RemoteCertificate
+  $cert2 = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($cert)
+  $cert2 | Format-List *
+
+SCREENSHOT CHECKLIST
+--------------------
+When taking screenshots, capture:
+
+1. Full OpenSSL s_client output showing:
+   - Certificate chain
+   - Subject and Issuer
+   - Validity dates
+   - Cipher suite information
+
+2. Certificate details (expanded view):
+   - Certificate subject (CN, O, C fields)
+   - Issuer information
+   - Validity period (Not Before / Not After)
+   - Public key information
+   - Extensions (SAN, Key Usage, etc.)
+
+3. Cipher suite details:
+   - Selected TLS version
+   - Selected cipher suite name
+   - Key exchange method
+   - Encryption algorithm
+   - MAC algorithm
+
