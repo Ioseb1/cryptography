@@ -1,0 +1,5 @@
+This is a sample message for cryptography demonstration.
+It contains multiple lines to test encryption and decryption capabilities.
+The content includes various characters: numbers (123456), symbols (!@#$%^&*), and text.
+This file will be encrypted using both RSA and AES-256 algorithms to compare their performance and use cases.
+

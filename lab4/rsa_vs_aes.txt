@@ -1,0 +1,143 @@
+RSA vs AES: Performance and Use-Case Comparison
+================================================
+
+OVERVIEW
+--------
+This document compares RSA (asymmetric cryptography) and AES-256 (symmetric cryptography)
+based on the encryption/decryption demonstration performed on message.txt.
+
+1. ALGORITHM TYPE
+-----------------
+RSA (Rivest-Shamir-Adleman):
+- Asymmetric (Public-Key) Cryptography
+- Uses a key pair: public key for encryption, private key for decryption
+- Based on the mathematical difficulty of factoring large prime numbers
+
+AES-256 (Advanced Encryption Standard):
+- Symmetric Cryptography
+- Uses the same key for both encryption and decryption
+- Based on substitution-permutation network principles
+
+2. KEY MANAGEMENT
+-----------------
+RSA:
+- Requires key pair generation (public and private keys)
+- Public key can be shared openly; private key must be kept secret
+- Key distribution is easier (no need for secure channel to share public key)
+- Key size: 2048 bits (recommended minimum)
+
+AES-256:
+- Requires a single 256-bit (32-byte) key
+- Key must be kept secret and shared securely between parties
+- Key distribution is challenging (requires secure channel or key exchange protocol)
+- Key size: 256 bits (fixed)
+
+3. PERFORMANCE CHARACTERISTICS
+-------------------------------
+RSA:
+- SLOW for large data encryption/decryption
+- Encryption is faster than decryption
+- Limited data size per operation (max ~214 bytes for 2048-bit key with OAEP padding)
+- For larger files, data must be split into chunks, significantly increasing processing time
+- Computational complexity: O(n^3) where n is key size
+- Best suited for small data or encrypting symmetric keys
+
+AES-256:
+- FAST for data encryption/decryption
+- Symmetric operations (encryption and decryption are similar in speed)
+- Can handle files of any size efficiently
+- No size limitations per operation
+- Computational complexity: O(n) where n is data size
+- Best suited for bulk data encryption
+
+4. USE CASES
+------------
+RSA (Asymmetric Cryptography):
+✓ Digital signatures and authentication
+✓ Key exchange (encrypting symmetric keys)
+✓ Secure email (PGP/GPG)
+✓ SSL/TLS handshake (key exchange phase)
+✓ Small data encryption (passwords, tokens)
+✓ Certificate-based authentication
+✗ NOT suitable for encrypting large files directly
+✗ NOT suitable for real-time data streaming
+
+AES-256 (Symmetric Cryptography):
+✓ Bulk data encryption (files, databases, disk encryption)
+✓ Real-time data encryption (video streaming, VoIP)
+✓ Database encryption
+✓ File system encryption (BitLocker, FileVault)
+✓ Secure communication channels (after key exchange)
+✓ High-performance encryption requirements
+✗ Requires secure key distribution mechanism
+✗ Key management complexity in multi-party scenarios
+
+5. PRACTICAL OBSERVATIONS FROM DEMONSTRATION
+--------------------------------------------
+From encrypting message.txt (approximately 300 bytes):
+
+RSA Performance:
+- File had to be split into multiple chunks (214 bytes each)
+- Each chunk encrypted separately, resulting in larger encrypted file
+- Slower processing due to multiple encryption operations
+- Encrypted file size: Larger than original (due to chunking overhead)
+
+AES-256 Performance:
+- Entire file encrypted in a single operation
+- Fast processing, minimal overhead
+- Encrypted file size: Similar to original (with padding)
+- Much faster execution time
+
+6. SECURITY CONSIDERATIONS
+--------------------------
+RSA:
+- Security depends on key size (2048-bit minimum recommended)
+- Vulnerable to quantum computing (Shor's algorithm)
+- Requires proper padding (OAEP recommended)
+- Key pair must be generated securely
+
+AES-256:
+- Considered quantum-resistant (Grover's algorithm only halves security)
+- Very secure when properly implemented
+- Requires secure random key generation
+- IV (Initialization Vector) must be unique for each encryption
+
+7. HYBRID APPROACH (BEST PRACTICE)
+-----------------------------------
+In real-world applications, RSA and AES are often used together:
+
+1. Generate a random AES-256 key
+2. Encrypt the data with AES-256 (fast, efficient)
+3. Encrypt the AES key with RSA public key (small data, fast)
+4. Send both: RSA-encrypted AES key + AES-encrypted data
+
+This combines the benefits of both:
+- Fast bulk encryption (AES)
+- Secure key distribution (RSA)
+- No size limitations
+- Optimal performance
+
+8. SUMMARY
+----------
+RSA:
+- Use for: Key exchange, digital signatures, small data
+- Avoid for: Large file encryption, real-time streaming
+- Performance: Slow for bulk data
+- Key Management: Easier distribution
+
+AES-256:
+- Use for: Large files, bulk data, real-time encryption
+- Avoid for: Direct key exchange (without secure channel)
+- Performance: Fast for any data size
+- Key Management: Requires secure distribution
+
+CONCLUSION
+----------
+Both algorithms serve different purposes in modern cryptography:
+- RSA excels at secure key exchange and authentication
+- AES excels at efficient bulk data encryption
+- Together, they form the foundation of secure communication systems
+
+The demonstration clearly shows that AES-256 is significantly faster for file encryption,
+while RSA is better suited for secure key exchange and small data encryption.
+
