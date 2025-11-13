@@ -1,23 +1,8 @@
-"""
-Task 3B: HMAC using SHA-256
-Creates HMAC for data.txt using SHA-256 with key "secretkey123"
-"""
-
 import hmac
 import hashlib
 import os
 
 def compute_hmac_sha256(filename, key):
-    """
-    Compute HMAC-SHA256 of a file.
-    
-    Args:
-        filename: Path to the file to hash
-        key: Secret key (string or bytes)
-    
-    Returns:
-        str: Hexadecimal representation of the HMAC
-    """
     if isinstance(key, str):
         key_bytes = key.encode('utf-8')
     else:
@@ -36,24 +21,9 @@ if __name__ == "__main__":
     key = "secretkey123"
     
     if not os.path.exists(filename):
-        print(f"Error: {filename} not found!")
+        print(f"File not found: {filename}")
         exit(1)
     
-    with open(filename, 'r') as f:
-        content = f.read()
-    
-    print("=" * 60)
-    print("Task 3B: HMAC using SHA-256")
-    print("=" * 60)
-    print(f"\nFile: {filename}")
-    print(f"Content: {content}")
-    print(f"Key: {key}")
-    
     hmac_value = compute_hmac_sha256(filename, key)
-    
-    print(f"\nHMAC-SHA256:")
-    print(f"  {hmac_value}")
-    print(f"\nHMAC (uppercase):")
-    print(f"  {hmac_value.upper()}")
-    print(f"\nHMAC length: {len(hmac_value)} characters (256 bits = 32 bytes)")
+    print(f"HMAC-SHA256: {hmac_value}")
 
