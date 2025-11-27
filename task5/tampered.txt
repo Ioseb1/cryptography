@@ -1,0 +1,18 @@
+This is the original file that will be used for integrity checking.
+
+The hashing utility will compute SHA-256, SHA-1, and MD5 hashes of this file
+and store them in a JSON file.
+
+Later, we will create a tampered version of this file to demonstrate
+how the integrity check detects modifications.
+
+Key information in this file:
+- File creation date: 2025
+- Purpose: Demonstrate hash-based integrity checking
+- Content: This is the ORIGINAL, UNMODIFIED content - TAMPERED VERSION
+
+THIS LINE HAS BEEN ADDED TO TAMPER WITH THE FILE.
+
+Any modification to this file will result in different hash values,
+which will be detected by the integrity verification process.
+

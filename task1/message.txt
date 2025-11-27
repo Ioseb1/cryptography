@@ -1,0 +1,8 @@
+This is a secret message that needs to be encrypted securely using hybrid encryption (RSA + AES).
+
+The message contains sensitive information that should only be readable by User A.
+
+Hybrid encryption combines the best of both worlds:
+- RSA for secure key exchange
+- AES for efficient bulk data encryption
+

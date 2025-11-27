@@ -1,0 +1,18 @@
+Dear Bob,
+
+This is a confidential message from Alice. I am using hybrid encryption to ensure 
+that only you can read this message.
+
+The encryption process involves:
+1. Generating a random AES-256 key for symmetric encryption
+2. Encrypting this message using AES-256-CBC mode
+3. Encrypting the AES key using your RSA public key
+4. Computing a SHA-256 hash for integrity verification
+
+This demonstrates the hybrid encryption protocol we learned in Week 2 & Week 4.
+
+Best regards,
+Alice
+
+P.S. The integrity check will verify that the message hasn't been tampered with during transmission.
+

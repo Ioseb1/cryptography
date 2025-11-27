@@ -1,0 +1,22 @@
+Subject: Confidential Company Information
+
+Dear Bob,
+
+This is a confidential internal company message that requires both encryption and digital signature.
+
+The message contains sensitive information about our upcoming project that should only be accessible to authorized personnel.
+
+Key Points:
+1. Project Alpha is scheduled to launch in Q2 2025
+2. Budget allocation: $2.5M
+3. Team size: 15 members
+4. Deadline: June 30, 2025
+
+Please keep this information confidential and do not share it outside the authorized team.
+
+Best regards,
+Alice
+Security Department
+
+This message has been digitally signed to verify its authenticity and encrypted to ensure confidentiality.
+
